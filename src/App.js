@@ -71,7 +71,7 @@ function App() {
     Setfilterbycategory(data);
     ProductByCategory();
   };
- 
+      
   useEffect(() => {
     APiData();
     ProductsData();
