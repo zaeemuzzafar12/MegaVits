@@ -14,7 +14,11 @@ import Maincart from "./components/AddToCart/Maincart";
 import ProductDetails from "./components/Products/ProductDetails";
 import CategoryDetails from "./components/Category/CategoryDetails";
 import Login from "./components/Authentication/Login";
+import UserDashbaord from "./components/Authentication/UserDashbaord";
 import Register from "./components/Authentication/Register";
+
+import {getApi} from '../src/functions/apifunctions'
+
 function App() {
   const [categories, Setcategories] = useState([]);
   const [filterbycategory, Setfilterbycategory] = useState("");
@@ -22,7 +26,16 @@ function App() {
   const [filterdata, Setfilterdata] = useState([]);
   const [idpass , Setidpass] = useState(0);
   const [productdetails , Setproductdetails] = useState({});
-  
+
+  const [prod ,setprod] = useState([])
+
+  const apiGet = async()=>{
+    const get = await getApi('product/getallProduct')
+    //console.log("products ",get)
+    setprod(get?.data?.data)
+  }
+ console.log("my product :",prod)
+
   const APiData = async () => {
     const url = await fetch(`https://api.escuelajs.co/api/v1/categories`);
     const response = await url.json();
@@ -63,6 +76,8 @@ function App() {
     APiData();
     ProductsData();
 
+    apiGet()
+
   }, []);
 
   const products = useSelector((state) => state?.carts?.cart)
@@ -82,11 +97,12 @@ function App() {
           <Route path="/product/:id" element={ <ProductDetails  data={data}   /> } ></Route>
           <Route path="/category/:id" element={ <CategoryDetails categories={categories}  /> } ></Route>
           <Route path="/category" element={ <Categories categories={categories} filterData={filterData}  /> } ></Route>
-          <Route path="/product" element={ <Products   data={data} filterdata={filterdata} /> } ></Route>
+          <Route path="/product" element={ <Products   data={prod}  /> } ></Route>
           <Route path="/aboutus" element={ <About /> } ></Route>
           <Route path="/maincart" element={ <Maincart /> } ></Route>
           <Route path="/login" element={ <Login /> }></Route>
           <Route path="/register" element={ <Register /> }></Route>
+          <Route path="/userdashboard" element={ <UserDashbaord /> }></Route>
         </Routes>
       <Footer />
     </div>
