@@ -1,11 +1,14 @@
 
 import React,{useState} from 'react'
-import { postApi } from '../../functions/apifunctions';
+
+import { NavLink , useNavigate } from 'react-router-dom'
+import { postApis } from '../../functions/apifunctions';
 import baseurl from "../../functions/baseurl";
 import axios from 'axios'
 import Formdata from '../Authentication/formdata/formData'
+import mime from 'mime';
 const Register = () => {
-
+  const navigate = useNavigate()
     const [username, setusername] = useState('');
     const [address, setaddress] = useState('');
     const [email, setEmail] = useState('');
@@ -14,21 +17,25 @@ const Register = () => {
     const [phone, setphone] = useState('');
 
 
-const handleChange = async(e) => {
+
+
+const handleChange = async (e) => {
     e.preventDefault();
-    const formdata = new FormData()
-    formdata.append('username',username);
-    formdata.append('address',address);
-    formdata.append('email',email);
-    formdata.append('password',password);
-    formdata.append('avator',avator);
-    formdata.append('phone',phone);
+    let payload = new FormData()
+    payload.append('username',username);
+    payload.append('address',address);
+    payload.append('email',email);
+    payload.append('password',password);
+    payload.append('phone',phone);
+    payload.append("avator", avator);
+    
 
-    console.log("formdata ",formdata)
-
-    const data = await axios.post(`${baseurl}${'user/createUsers'}`,formdata)
-    console.log(data)
-    return data;
+    const resp = await postApis('user/createUsers' ,payload);
+    console.log(resp)
+    if(resp?.data?.status === 201){
+     navigate('/login')
+    }
+    
 }
   return (
     
@@ -46,7 +53,7 @@ const handleChange = async(e) => {
                       <span className="input-icons"><i className="fa-solid fa-user"></i></span>
                       <input 
                         type="text" 
-                        onChange={(e) => setusername(e.target.value) } 
+                        onChange={(e) => setusername(e?.target?.value)  } 
                         value={username} 
                         className="form-control" 
                         id="inputEmail4" 
@@ -61,7 +68,7 @@ const handleChange = async(e) => {
                       <span className="input-icons"><i className="fa-solid fa-user"></i></span>
                       <input 
                         type="text" 
-                        onChange={(e) => setaddress(e.target.value)} 
+                        onChange={(e) => setaddress(e?.target?.value)} 
                         value = {address} 
                         className="form-control" 
                         id="inputEmail4" 
@@ -73,7 +80,14 @@ const handleChange = async(e) => {
               {/* <Formdata type='email' onChange={setEmail} value={email} placeholder='Your Email' /> */}
                   <div className="login-field">
                       <span className="input-icons"><i className="fas fa-envelope"></i></span>
-                      <input type="email" onChange={(e) => setEmail(e.target.value)} value = {email}  className="form-control" id="inputEmail4" placeholder="Your Email" />
+                      <input 
+                        type="email" 
+                        onChange={(e) => setEmail(e?.target?.value)} 
+                        value={email}  
+                        className="form-control" 
+                        id="inputEmail4" 
+                        placeholder="Your Email" 
+                      />
                   </div>
               </div>
               <div className="col-12">
@@ -82,7 +96,7 @@ const handleChange = async(e) => {
                       <span className="input-icons"><i className="fa-solid fa-lock"></i></span>
                       <input 
                         type="password" 
-                        onChange={(e) => setPassword(e.target.value)} 
+                        onChange={(e) => setPassword(e?.target?.value)} 
                         value = {password} 
                         className="form-control" 
                         id="inputPassword4" 
@@ -97,7 +111,7 @@ const handleChange = async(e) => {
                       <span className="input-icons"><i className="fa-solid fa-user"></i></span>
                       <input 
                         type="text" 
-                        onChange={(e) =>setphone(e.target.value)} 
+                        onChange={(e) =>setphone(e?.target?.value)} 
                         value = {phone} 
                         className="form-control" 
                         id="inputEmail4" 
@@ -111,8 +125,7 @@ const handleChange = async(e) => {
                       <span className="input-icons"><i className="fa-solid fa-lock"></i></span>
                       <input 
                         type="file" 
-                        onChange={(e) => setavator(e.target.value) } 
-                        value = {avator} 
+                        onChange={(e) => setavator(e?.target?.files[0]) } 
                         className="form-control" 
                         id="inputPassword4" 
                         placeholder="upload image"
@@ -129,7 +142,7 @@ const handleChange = async(e) => {
                   </div>
               </div>
               <div className="col-12">
-                  <button type="submit" className="checkout_btn" onClick={handleChange}>Sign Up</button>
+                  <button type="submit" className="checkout_btn" onClick={(e) => handleChange(e)}>Sign Up</button>
               </div>
 
               
