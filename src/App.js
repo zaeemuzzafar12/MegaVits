@@ -29,12 +29,25 @@ function App() {
 
   const [prod ,setprod] = useState([])
 
+  const [cate,setcate] = useState([])
+
   const apiGet = async()=>{
     const get = await getApi('product/getallProduct')
-    //console.log("products ",get)
     setprod(get?.data?.data)
   }
- console.log("my product :",prod)
+  console.log("my product :",prod)
+
+
+  const ceteApi = async ()=>{
+    const getCategory = await getApi('category/getAllCategory')
+    //console.log("category ",getCategory.data.data)
+    setcate(getCategory?.data?.data)
+
+  }
+  console.log("cate ",cate)
+
+
+
 
   const APiData = async () => {
     const url = await fetch(`https://api.escuelajs.co/api/v1/categories`);
@@ -75,7 +88,7 @@ function App() {
   useEffect(() => {
     APiData();
     ProductsData();
-
+    ceteApi()
     apiGet()
 
   }, []);
@@ -96,7 +109,7 @@ function App() {
           <Route path="/cart/:id" element={ <Cart /> } ></Route>
           <Route path="/product/:id" element={ <ProductDetails  data={data}   /> } ></Route>
           <Route path="/category/:id" element={ <CategoryDetails categories={categories}  /> } ></Route>
-          <Route path="/category" element={ <Categories categories={categories} filterData={filterData}  /> } ></Route>
+          <Route path="/category" element={ <Categories data={cate}  /> } ></Route>
           <Route path="/product" element={ <Products   data={prod}  /> } ></Route>
           <Route path="/aboutus" element={ <About /> } ></Route>
           <Route path="/maincart" element={ <Maincart /> } ></Route>

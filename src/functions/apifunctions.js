@@ -16,6 +16,17 @@ export const postApi= async(url,payload)=>{
 } 
 
 
+export const postApis = async(url,payload)=>{
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    };  
+    const data = await axios.post(`${baseurl}${url}`,payload,config) 
+    return data
+}
+
+
 
 
 

@@ -1,8 +1,11 @@
 import React from "react";
 
 const formData = (props) => {
+console.log(props)
   return (
+    <div className="col-12">
     <div>
+      
       <div className="login-field">
         <span className="input-icons">
           <i className="fa-solid fa-user"></i>
@@ -12,9 +15,10 @@ const formData = (props) => {
           className="form-control"
           id="inputEmail4"
           placeholder={props.placeholder}
-          onChange={(e) => props.setStates(e.target.value)}
+          onChange={props.onChange}
           value = {props.states}
         />
+      </div>
       </div>
     </div>
   );
