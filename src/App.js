@@ -101,10 +101,7 @@ function App() {
         <Routes>
           <Route path="/" element={ 
             <LandingPage 
-              categories={categories}
-              filterData={filterData}
-              data={data}
-              filterdata={filterdata}
+              
              /> } ></Route>
           <Route path="/cart/:id" element={ <Cart /> } ></Route>
           <Route path="/product/:id" element={ <ProductDetails  data={data}   /> } ></Route>

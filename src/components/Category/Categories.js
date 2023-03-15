@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -23,7 +23,7 @@ const Categories = ({data }) => {
           className="mySwiper"
         >
           {
-            data.map((ele,index)=>{
+            data?.map((ele,index)=>{
               return(
                 <>
                 <SwiperSlide key={index + ele?.id}>

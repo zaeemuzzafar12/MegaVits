@@ -5,7 +5,7 @@ import Cover from './Cover'
 import Pagination from './Pagination'
 import Products from './Products/Products'
 
-const LandingPage = ({categories,filterData,data,filterdata,Setidpass ,idpass}) => {
+const LandingPage = ({cate,prod}) => {
 
 
 
@@ -13,8 +13,8 @@ const LandingPage = ({categories,filterData,data,filterdata,Setidpass ,idpass}) 
     <>
         <Cover />
         <About />
-        <Categories categories={categories} filterData={filterData} />
-        <Products  data={data} filterdata={filterdata} Setidpass={Setidpass} idpass={idpass} />
+        <Categories data={cate} />
+        <Products    data={prod}/>
         <Pagination />
     </>
   )

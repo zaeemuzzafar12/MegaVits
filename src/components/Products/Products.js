@@ -27,7 +27,7 @@ const Products = ({ data  }) => {
       <p className="mainHeading">Featured Products</p>
       <div className="row">
        {
-        data.map((ele,index) => {
+        data?.map((ele,index) => {
               return(
                 <>
                 <div
