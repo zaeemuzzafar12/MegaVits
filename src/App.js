@@ -33,9 +33,10 @@ function App() {
 
   const apiGet = async()=>{
     const get = await getApi('product/getallProduct')
+    console.log("mere products",get)
     setprod(get?.data?.data)
   }
-  console.log("my product :",prod)
+  console.log("my products :",prod)
 
 
   const ceteApi = async ()=>{
@@ -77,7 +78,6 @@ function App() {
 
   const ProductsData = async () => {
     const products = await DataByData();
-    console.log("fgfgfg", products);
     Setdata(products);
   };
   const filterData = (data) => {

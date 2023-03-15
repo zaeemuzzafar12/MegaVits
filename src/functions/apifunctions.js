@@ -1,11 +1,25 @@
 import baseurl from "./baseurl";
 import axios from 'axios'
 
+
+const token = localStorage.getItem('token');
 export const getApi = async(url)=>{
+
     const data = await axios.get(`${baseurl}${url}`)
     return data 
 }
 
+export const getUserDetails = async(url)=>{
+    const config = {
+        headers:{
+            'Authorization': `Bearer ${token}`
+    
+        }
+    }
+        const data = await axios.get(`${baseurl}${url}`,config)
+        return data 
+    }
+    
 
 export const postApi= async(url,payload)=>{
    
@@ -26,7 +40,26 @@ export const postApis = async(url,payload)=>{
     return data
 }
 
-
+// export const fetchdata = async()=>{
+//     fetch('/api/user', {
+//         headers: {
+//           Authorization: `Bearer ${token}`
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//       })
+//       .then(data => {
+//         console.log("user data :",data);
+//         // Handle the user details data here
+//       })
+//       .catch(error => {
+//         console.error('There was a problem with the network request:', error);
+//       });
+// } 
 
 
 

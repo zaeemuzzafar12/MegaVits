@@ -5,7 +5,7 @@ const FooterTop = () => {
     
     <>
         <div className='footer-logo'>
-            <a href=""><img src={img1} className="img-fluid" alt="" /></a>
+            <img src={img1} className="img-fluid" alt="" />
         </div>
         
     </>

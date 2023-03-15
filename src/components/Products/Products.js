@@ -19,6 +19,7 @@ const Products = ({ data  }) => {
   const AddItems = (items) => {
     dispatch(addProducts(items))
   }
+  console.log("data of a product : ",data);
 
  
 
@@ -27,7 +28,7 @@ const Products = ({ data  }) => {
       <p className="mainHeading">Featured Products</p>
       <div className="row">
        {
-        data.map((ele,index) => {
+                data.map((ele,index) => {
               return(
                 <>
                 <div

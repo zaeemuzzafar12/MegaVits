@@ -4,7 +4,7 @@ import { postApis } from "../../functions/apifunctions";
 import baseurl from "../../functions/baseurl";
 import axios from 'axios'
 import FormsData from '../Authentication/formdata/formData'
-
+import {useNavigate} from 'react-router-dom'
 const Register = () => {
 
     const [username, setusername] = useState('');
@@ -13,6 +13,8 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [avator, setavator] = useState('');
     const [phone, setphone] = useState('');
+    const navigate = useNavigate()
+    console.log("navigate ",navigate)
 
 
 const handleusername =(e)=>{
@@ -72,7 +74,12 @@ const handleChange = async(e) => {
     
 
     const data = await postApis('user/createUsers',payload)
+    if(data.status === 200){
+        navigate('/login')
+    }
+
     console.log(data)
+
    
 
    
