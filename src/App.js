@@ -28,23 +28,19 @@ function App() {
   const [productdetails , Setproductdetails] = useState({});
 
   const [prod ,setprod] = useState([])
-
   const [cate,setcate] = useState([])
 
   const apiGet = async()=>{
     const get = await getApi('product/getallProduct')
     setprod(get?.data?.data)
   }
-  console.log("my product :",prod)
-
-
+  
   const ceteApi = async ()=>{
     const getCategory = await getApi('category/getAllCategory')
     //console.log("category ",getCategory.data.data)
     setcate(getCategory?.data?.data)
-
   }
-  console.log("cate ",cate)
+  
 
 
 
@@ -77,7 +73,6 @@ function App() {
 
   const ProductsData = async () => {
     const products = await DataByData();
-    console.log("fgfgfg", products);
     Setdata(products);
   };
   const filterData = (data) => {

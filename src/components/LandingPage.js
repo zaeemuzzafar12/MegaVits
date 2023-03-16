@@ -14,7 +14,7 @@ const LandingPage = ({cate,prod}) => {
         <Cover />
         <About />
         <Categories data={cate} />
-        <Products    data={prod}/>
+        <Products    data={prod} />
         <Pagination />
     </>
   )

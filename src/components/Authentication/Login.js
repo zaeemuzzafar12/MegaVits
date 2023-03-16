@@ -16,6 +16,7 @@ const Login = () => {
       password:password
     }
     const token = await postApi('user/login',payload);
+    console.log(token)
     if(token !== null) {
       window.localStorage.setItem("token",token?.data);
       navigate("/userdashboard");

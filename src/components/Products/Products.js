@@ -10,7 +10,7 @@ import {
   faMagnifyingGlass,
   faBagShopping,
 } from "@fortawesome/free-solid-svg-icons";
-const Products = ({ data  }) => {
+const Products = ({ data }) => {
 
 
   const dispatch = useDispatch();
@@ -19,7 +19,8 @@ const Products = ({ data  }) => {
   const AddItems = (items) => {
     dispatch(addProducts(items))
   }
-
+  console.log("data of a product : ",data);
+  
  
 
   return (
