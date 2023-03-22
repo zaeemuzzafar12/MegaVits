@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination } from "swiper";
 import { Navigation } from "swiper";
-
+ 
 const Cart = ({ data }) => {
     const imagebaseurl = 'http://localhost:5000'
     const [PrductDetail, SetPrductDetail] = useState([])
