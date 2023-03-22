@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react'
+import Table from 'react-bootstrap/Table'
 import { useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NavLink } from 'react-router-dom'
@@ -8,83 +9,81 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination } from "swiper";
 import { Navigation } from "swiper";
+import { addProducts } from '../Redux/Actions'
+import { useDispatch,useSelector } from "react-redux";
+
 const ProductDetails = ({data}) => {
     const [prdouctdetails , Setprdouctdetails] = useState([]);
     const { id} = useParams(null);
+    const imagebaseurl = 'http://localhost:5000'
+
+    const dispatch = useDispatch();
+    const param = useParams()
+    
+
+    const products = useSelector((state) => state?.carts?.cart)
+    
 
     const ProductDetails = () => {
        const pdetails = data?.
-       map((items) => items).
-       filter((datas) => datas?.id == id )
+       map((items) => items)?.
+       filter((datas) => datas?._id == param.id )
        Setprdouctdetails(pdetails)
     }
-    console.log("prdouctdetails",prdouctdetails)
+    const AddItems = (item) => {  
+      dispatch(addProducts(item))  
+    }
+
     useEffect(() => {
         ProductDetails()
     },[])
 
   return (
-   <div className='container-fluid'> 
-        <div className='row'>{
+   <>
+      <div className="container mb-4 ">
+        <h2 className='text-center'>Iteams Details Page
+        </h2>
 
-                    prdouctdetails.length > 0 &&
-                    prdouctdetails.map((data) => {
-                        return(
-                            <>
-                                <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                                <Swiper
-                                                slidesPerView={1}
-                                                spaceBetween={30}
-                                                pagination={{
-                                                    clickable: true,
-                                                }}
-                                                navigation={true}
-                                                modules={[Pagination, Navigation]}
-                                                className="mySwiper"
-                                                >
-                                                {
-                                                    data?.images?.map((item) => {
-                                                        return(
-                                                            <SwiperSlide>
-                                                                <img src={item} />
-                                                            </SwiperSlide>
-                                                            
-                                                        )
-                                                    })
-                                                }
-                                </Swiper>
-                                     
-                                </div>
-                                <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                                    <div className='row'>
-                                        <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4' style={{padding:"50px"}}>
-                                        Title: <strong>{data?.title}</strong>
-                                        </div>
-                                        <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4' style={{padding:"50px"}}>
-                                        Price:<strong>{data?.price}</strong>
-                                        </div>
-                                        <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4' style={{padding:"50px"}}>
-                                        Description : <strong>{data?.description}</strong>
-                                        </div>
+        <section className='container mt-3'>
+          <div className="iteamsdetails">
+          {
+            prdouctdetails.map((ele)=>{
+              return (
+                <>
+                <div className="items_img">
+              <img src={`${imagebaseurl}${ele?.avator}`} alt="" />
+            </div>
 
-                                    </div>
-                                </div>
-                                <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4' style={{padding:"150px",display:"list-item"}}>
-                                    <div>
-                                        Category:{ data?.category?.name}
-                                    </div>
-                                    <div>
-                                        <NavLink to={`/category/${data?.category?.id}`}>
-                                            <img src={data?.category?.image} width={200} height={200} />
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </>
-                        )
-                    })
-        }
-        </div>
-   </div>
+            <div className="details">
+              <Table>
+                <tr>
+                  <td>
+                    <p> <strong>Name</strong>  : {ele.name}</p>
+                    <p> <strong>Price</strong>  : ₹{ele.price}</p>
+                    <p> <strong>size</strong>  : {ele.size}</p>
+                    <p> <strong>Total</strong>  :₹  {ele.price }</p>
+                    
+
+                  </td>
+                  <td>
+                    <p><strong>Rating : </strong><span style={{background:"green",color:"#fff",padding:"2px 5px",borderRadius:"5px"}}>{ele.rating} ★★★★★	</span></p>
+                    <p><strong>Order Review : </strong> Good<span >{ele.somedata}	</span></p>
+                    <p><strong>Remove :</strong> <span ><i className='fas fa-trash' style={{color:"red",fontSize:20,cursor:"pointer"}}></i>	</span></p>
+                    <button onClick={()=>AddItems(ele)}>Add To Cart </button>
+                  </td>
+                  
+                </tr>
+              </Table>
+            </div>
+          
+                </>
+              )
+            })
+          }
+          </div>
+        </section>
+      </div>
+   </>
   )
 }
 

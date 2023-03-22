@@ -1,6 +1,9 @@
-import React,{useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import ReactStars from "react-rating-stars-component";
+import Table from 'react-bootstrap/Table'
+// import { useParams } from 'react-router-dom'
+import { useSelector ,useDispatch } from 'react-redux'
+import { addProducts ,deleteProducts ,REMOVE} from '../Redux/Actions'
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -8,95 +11,100 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination } from "swiper";
 import { Navigation } from "swiper";
-const Cart = () => {
 
-const [PrductDetail , SetPrductDetail  ] = useState([])
-const { id } = useParams(null)
+const Cart = ({ data }) => {
+    const imagebaseurl = 'http://localhost:5000'
+    const [PrductDetail, SetPrductDetail] = useState([])
+    console.log("data in carts ", data)
 
-const productDetails = useSelector((state) => state?.carts?.cart)
+    // const { id } = useParams()
+    // console.log(id)
+    
+    const productDetails = useSelector((state) => state?.carts?.cart)
+    const dispatch = useDispatch()
 
-const ProductEvalution = () => {
-    const peval = productDetails.filter((data) => data.id == id)
-    console.log(peval,"peval")
-    SetPrductDetail(peval)
-}
+    
 
-useEffect(() => {
-    ProductEvalution();
-},[id])
+    const AddItems = (item) => {  
+        dispatch(addProducts(item))  
+      }
+     
 
-console.log("productDetails",productDetails)
+    const onDelete = (data) => {
+        dispatch(deleteProducts(data?._id))
+      }
+    
+    // remove one
+    const remove = (item)=>{
+      dispatch(REMOVE(item))
+    }
+    
 
-  return (
-    <div className='container-fluid'>
-        <div className='row'>
-            <h3>Product Details</h3>
-            {
-                PrductDetail &&
-                PrductDetail.length > 0 &&
-                PrductDetail.map((data) => {
-                    return(
-                        <>
-                            <div className='col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5'>
-                                <Swiper
-                                                slidesPerView={1}
-                                                spaceBetween={30}
-                                                pagination={{
-                                                    clickable: true,
-                                                }}
-                                                navigation={true}
-                                                modules={[Pagination, Navigation]}
-                                                className="mySwiper"
-                                                >
-                                                {
-                                                    data?.images?.map((item) => {
-                                                        return(
-                                                            <SwiperSlide>
-                                                                <img src={item} />
-                                                            </SwiperSlide>
-                                                            
-                                                        )
-                                                    })
-                                                }
-                                </Swiper>
-                            </div>
-                            <div className='col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3'>
-                                <div className='row'>
-                                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'>
-                                        <p className="product_para1">Title: {data?.title}</p>
-                                    </div>
-                                     <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'>
-                                     <p className="product_para1">Description:{data?.description?.slice(0,20)}</p>
-                                    </div>
-                                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'>
-                                    <p className="product_para1">Price: {data?.price}</p>
-                                    </div>
+    // const ProductEvalution = () => {
+    //     const peval = productDetails.filter((ele) => ele?._id == data?._id)
+    //     console.log("peval", peval)
+    //     SetPrductDetail(peval)
+    // }
 
-                                </div>
-                                    
-                                   
-                                    
-                            </div>
-                            <div className='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                                <div className='row'>
-                                    <div className='col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                                        <p>{data?.category?.name}</p>
-                                    </div>
-                                    <div className='col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                                        <img src={data?.category?.image} height={300} width={300} />
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                    )
-                })
 
-            }
 
-        </div>
+    // useEffect(() => {
+    //     ProductEvalution();
+    // }, [])
 
-    </div>
-  )
+
+
+    return (
+        <>
+              <div className="container mb-4 ">
+        <h2 className='text-center'>Order Details Page
+        </h2>
+
+        <section className='container mt-3'>
+          <div className="iteamsdetails">
+          {
+            productDetails.map((ele)=>{
+              return (
+                <>
+                <div className="items_img">
+              <img  src={`${imagebaseurl}${ele?.avator}`} alt="" />
+            </div>
+
+            <div className="details">
+              <Table>
+                <tr>
+                  <td>
+                    <p> <strong>Name</strong>  : {ele.name}</p>
+                    <p> <strong>Price</strong>  : ₹{ele.price}</p>
+                    <p> <strong>size</strong>  : {ele.size}</p>
+                    <p> <strong>Total</strong>  :₹  {ele.price}</p>
+
+                    <div className='mt-5 d-flex justify-content-between align-items-center' style={{width:100,cursor:"pointer",background:"#ddd",color:"#111"}}>
+                    <span style={{fontSize:24}} onClick={ele.qnty <=1 ? ()=>onDelete(ele._id) : ()=>remove(ele)}>-</span>
+                    <span style={{fontSize:22}}>{ele.qnty}</span>
+                    <span style={{fontSize:24}} onClick={()=>AddItems(ele)}>+</span>
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <p><strong>Rating :</strong> <span style={{background:"green",color:"#fff",padding:"2px 5px",borderRadius:"5px"}}>{ele.rating} ★	</span></p>
+                    <p><strong>Order Review :</strong> <span >{ele.somedata}	</span></p>
+                    <p><strong>Remove :</strong> <span ><i className='fas fa-trash' ></i>	</span></p>
+                  </td>
+                </tr>
+              </Table>
+            </div>
+          
+                </>
+              )
+            })
+          }
+          </div>
+        </section>
+      </div>
+        </>
+    )
 }
 
 export default Cart

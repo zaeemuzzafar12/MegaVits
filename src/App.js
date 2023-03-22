@@ -45,44 +45,39 @@ function App() {
 
 
 
-  const APiData = async () => {
-    const url = await fetch(`https://api.escuelajs.co/api/v1/categories`);
-    const response = await url.json();
-    Setcategories(response);
-  };
 
-  const DataByData = async () => {
-    const url = await fetch(`https://api.escuelajs.co/api/v1/products`);
-    const response = await url.json();
-    return response;
-  };
 
-  const ProductByCategory = async () => {
-    const data = await DataByData();
-    const products = data?.filter((res) => {
-      if (
-        res &&
-        res?.category &&
-        res?.category?.name === filterbycategory?.name
-      ) {
-        return res?.category?.name;
-      }
-    });
-    Setfilterdata(products);
-  };
 
-  const ProductsData = async () => {
-    const products = await DataByData();
-    Setdata(products);
-  };
+
+  // const ProductByCategory = async () => {
+  //   const data = await DataByData();
+  //   const products = data?.filter((res) => {
+  //     if (
+  //       res &&
+  //       res?.category &&
+  //       res?.category?.name === filterbycategory?.name
+  //     ) {
+  //       return res?.category?.name;
+  //     }
+  //   });
+  //   Setfilterdata(products);
+  // };
+
+  // const ProductsData = async () => {
+  //   const products = await DataByData();
+  //   Setdata(products);
+  // };
+  // console.log("data in app.js",data)
+
+
   const filterData = (data) => {
     Setfilterbycategory(data);
-    ProductByCategory();
+    // ProductByCategory();
   };
       
   useEffect(() => {
-    APiData();
-    ProductsData();
+    
+    // ProductsData();
     ceteApi()
     apiGet()
 
@@ -98,8 +93,8 @@ function App() {
             <LandingPage 
               
              /> } ></Route>
-          <Route path="/cart/:id" element={ <Cart /> } ></Route>
-          <Route path="/product/:id" element={ <ProductDetails  data={data}   /> } ></Route>
+          <Route path="/cart" element={ <Cart  data={prod}/> } ></Route>
+          <Route path="/product/:id" element={ <ProductDetails  data={prod}   /> } ></Route>
           <Route path="/category/:id" element={ <CategoryDetails categories={categories}  /> } ></Route>
           <Route path="/category" element={ <Categories data={cate}  /> } ></Route>
           <Route path="/product" element={ <Products   data={prod}  /> } ></Route>

@@ -12,15 +12,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const Products = ({ data }) => {
 
-
   const dispatch = useDispatch();
+  const imagebaseurl = 'http://localhost:5000'
 
-
-  const AddItems = (items) => {
-    dispatch(addProducts(items))
+  const AddItems = (item) => {  
+    dispatch(addProducts(item))  
   }
-  console.log("data of a product : ",data);
-  
  
 
   return (
@@ -29,6 +26,7 @@ const Products = ({ data }) => {
       <div className="row">
        {
         data?.map((ele,index) => {
+          
               return(
                 <>
                 <div
@@ -38,11 +36,11 @@ const Products = ({ data }) => {
                   <div className="product_wrap">
                     <div className="product_item">
                       <div className="product_img">
-                        {/* <img
-                          src={ele?.images[0]}
+                        <img
+                          src={`${imagebaseurl}${ele?.avator}`}
                           className="img-fluid"
                           alt=""
-                        /> */}
+                        />
                       </div>
                       <ReactStars
                         count={5}
@@ -52,10 +50,11 @@ const Products = ({ data }) => {
                       />
                       <p className="product_para1">{ele?.name}</p>
                       <p className="product_para2">${ele?.price}</p>
+                      
                     </div>
                     <div className="prod_detail">
                     <NavLink to={`/product/${ele?.id}`}>
-                          <a  className="add_item">
+                          <a  className="add_item" >
                             <FontAwesomeIcon 
                               icon={faRightLeft}
                               
@@ -65,8 +64,8 @@ const Products = ({ data }) => {
                       <a href="" className="add_item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                       </a>
-                      <a  className="add_item">
-                        <FontAwesomeIcon icon={faBagShopping}/>
+                      <a  className="add_item" onClick={() => AddItems(ele)}>
+                        <FontAwesomeIcon  icon={faBagShopping}/>
                       </a>
                     </div>
                   </div>

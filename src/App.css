@@ -28,6 +28,45 @@
   color: #61dafb;
 }
 
+.container {
+  padding-top: 30px;
+  width: 300px;
+  margin: auto;
+}
+
+.input {
+  padding: 5px 15px;
+  width: 300px;
+}
+
+.user-list {
+  margin-top: 10px;
+}
+
+.user {
+  list-style: none;
+  margin: 3px 0;
+  padding: 10px;
+  background: #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-id {
+  color: red;
+  margin-right: 5px;
+}
+
+.user-name {
+  color: blue;
+}
+
+.user-price {
+  color: red;
+  margin-left: auto;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

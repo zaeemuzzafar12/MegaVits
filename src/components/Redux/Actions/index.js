@@ -6,9 +6,16 @@ export const addProducts = (items) => {
     }
 }
 
-export const deleteProducts = (id) => {
+export const deleteProducts = (_id) => {
     return{
         type:"REMOVE_FROM_CART",
-        payload: id
+        payload: _id
+    }
+}
+
+export const REMOVE = (item) => {
+    return {
+        type: "RMV_ONE",
+        payload: item
     }
 }

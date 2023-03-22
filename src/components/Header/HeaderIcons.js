@@ -11,8 +11,10 @@ import { faCartShopping , faXmark ,faTrash} from '@fortawesome/free-solid-svg-ic
 import  emptycart from '../../images/empty.jpg'
 import { deleteProducts } from '../Redux/Actions'
 const HeaderIcons = () => {
+  const imagebaseurl = 'http://localhost:5000'
 	const dispatch = useDispatch()
 	const [anchorEl, setAnchorEl] = useState(null);
+  const [id,setid] = useState([])
  
     const open = Boolean(anchorEl);
 
@@ -24,11 +26,15 @@ const HeaderIcons = () => {
     };
 
 	const products = useSelector((state) => state?.carts?.cart)
+  // console.log("products",products)
+  
+  
 
 	const onDelete = (data) => {
-		dispatch(deleteProducts(data))
+		dispatch(deleteProducts(data?._id))
 	}
-	
+  
+
 
 
 	useEffect(()=>{
@@ -96,25 +102,26 @@ const HeaderIcons = () => {
                                             <td>Name</td>
                                             <td>Price</td>
                                             <td>Delete</td>
-											<td>Cart</td>
+											                      <td>Cart</td>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <tr>
                                             <td>
-                                              <NavLink to={`/cart/${data?.id}`}>
-                                                <img src={data?.images} width={100} height={100} />
+                                              <NavLink to={`/cart`}>
+                                                <img src={`${imagebaseurl}${data?.avator}`} width={100} height={100} />
                                               </NavLink>
                                             </td>
-                                            <td>{data?.title?.slice(0,20)} </td>
+                                            <td>{data?.name?.slice(0,20)} </td>
                                             <td>{data?.price} </td>
+                                            
                                             <td  >
                                             <FontAwesomeIcon 
                                               icon={faTrash} 
                                               size="lg" 
                                               color='red'
                                               style={{cursor:"pointer"}} 
-                                              onClick={() => onDelete(data?.id)}
+                                              onClick={() => onDelete(data)}
                                               />
                                                
                                                 
@@ -132,6 +139,8 @@ const HeaderIcons = () => {
                                             
                                           </tr>
                                         </tbody>
+                                        <p>Price : ₹{data.price}</p>
+                                            <p>Quantity : {1}</p>
                                       </Table>
                                     </>
                                   )
